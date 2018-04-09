@@ -21,31 +21,27 @@ void gotoxy(int x, int y)
 }
 class GameObject
 {
-<<<<<<< HEAD
     public:
-=======
-
-public:
->>>>>>> 82cea51c426c027ae24211bb82ec32222c8607af
-    int x, y;
-    char symbol;
     virtual void draw() = 0;
 };
 class container : public GameObject
 {
 public:
-    container(char symbol, int x, int y)
+    int  containerX;
+    int containerY;
+    char container_symbol;
+     void ocontainer(char csymbol, int cx, int cy)
     {
-        this->symbol = symbol;
-        this->x = x;
-        this->y = y;
+        container_symbol = csymbol;
+        containerX = cx;
+        containerY = cy;
     }
     void draw()
     {
         for (int z = 0; z < 5; z++)
         {
-            gotoxy(x + z, y);
-            cout<<symbol;
+            gotoxy(containerX + z,containerY );
+            cout<<container_symbol;
         }
     }
     void movement()
@@ -83,83 +79,70 @@ public:
     {
         switch (direction)
         {
-        case RIGHT: x--;
+        case RIGHT: containerX--;
             break;
-        case LEFT: x++;
+        case LEFT: containerX++;
             break;
         }
-<<<<<<< HEAD
-        if (x >= 60)
+        if (containerX >= 60)
         {
             direction = RIGHT;
         }
-        if (x <= 10)
-=======
-        if (x >= 75)
-        {
-            direction = RIGHT;
-        }
-        if (x <= 0)
->>>>>>> 82cea51c426c027ae24211bb82ec32222c8607af
+        if (containerX<= 10)
         {
             direction = LEFT;
         }
     }
 };
 
-<<<<<
 class drop : public GameObject,public container
-class drop : public GameObject
 {
-//private:
-
 public:
-    int isalive;
-    drop(char symbol,int y)
+    int isalive=0;
+    int dropX;
+    int dropY;
+    char drop_symbol;
+    void odrop(char dsymbol,int dy)
     {
-        this->symbol = symbol;
-        this->y = y;
+        drop_symbol = dsymbol;
+        dropY = dy;
     }
     ~drop(){}
     void movement()
     {
-        y++;
-        container*container;
-        if(x==container->x&&container->y)
+        dropY++;
+        //container*container;
+        if(dropY==containerX||dropY==containerX+1||dropY==containerX+2||dropY==containerX+3||dropY==containerX+4)
         {
-            y=0;
-            score+=50;
+            dropY=0;
+            score=score+50;
             isalive=0;
         }
-        if (y>23)
+        if (dropY==25)
         {
-            lives=lives-1;
+            --lives;
+            dropY=0;
+            isalive=0;
             if(lives==0)
             {
+                gotoxy(0,4);
+                cout<<"Lives left:"<<"0/5";
                 running=false;
                 gotoxy(0,6);
                 cout<<"!!!GAME OVER!!!";
                 exit(0);
             }
-            y=0;
-            isalive=0;
+
         }
 
     }
-        if (y > 23)
-        {
-        y = 0;
-        //lives = lives -1;
-        isalive = 0;
-    }
 
-}
     void draw()
     {
 
         {
-        gotoxy(x, y);
-        cout << symbol;
+        gotoxy(dropX, dropY);
+        cout << drop_symbol;
         gotoxy(0,1);
         cout<<"OIL SPILL GAME";
          gotoxy(0,2);
@@ -173,7 +156,7 @@ public:
 
         }
     }
-    void checkcollison(container *container)
+   /* void checkcollison(container *container)
     {
         if (x == container->x && y == container->y)
         {
@@ -188,7 +171,7 @@ public:
         }
           if(lives==0)
          running=false;
-       }
+       }*/
 };
 void clrscr()
 {
@@ -196,46 +179,45 @@ void clrscr()
 }
 int main()
 {
-
+    container c;
     container *f[4];
+    //f[4]=&c;
     //container *c=new container('X',38,23);
+    drop d;
     drop *drops[number];
-    drop d('0',0);
-    container c('X',38,23);
-    container *co=&c;
+    //drops[number]=&d;
+    //drop d('0',0);
+    //container c('X',38,23);
+    //container *co=&c;
         for (int z = 0; z < 4; z++)
         {
-        f[z]= new container('X', 38, 23);
-    drop *drops[number];
-        for (int z = 0; z < 4; z++)
-        {
-        f[z]= new container('X', 38+z, 23);
+        f[z]= &c;
+        c.ocontainer('X', 38, 23);
         }
         for(int y = 0; y<number; y++)
         {
-            drops[y] = new drop('0',0);
+            drops[y] = &d;
+            d.odrop('0',0);
         }
 
             while (running=true)
         {
-            clrscr();
-          // d.checkcollison(co);
 
             clrscr();
+          // d.checkcollison(co);
             for (int z = 0; z < number;z++)
             {
                  if (drops[z]->isalive ==0)
                  {
-                    drops[z]->x = rand() %40+20;// location of drops
+                    drops[z]->dropX = rand() %40+20;// location of drops
                     drops[z]->isalive = 1;
                     //d.checkcollison(co);
-                    drops[z]->x = rand() %40+20;
-                    drops[z]->isalive = 1;
                   }
                  if(drops[z]->isalive !=0)
                  {
                     drops[z]->draw();
                     drops[z]->movement();
+                    //d.checkcollison(co);
                     break;
                  }
 
