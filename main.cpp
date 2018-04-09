@@ -21,8 +21,7 @@ void gotoxy(int x, int y)
 }
 class GameObject
 {
-
-public:
+    public:
     int x, y;
     char symbol;
     virtual void draw() = 0;
@@ -84,18 +83,18 @@ public:
         case LEFT: x++;
             break;
         }
-        if (x >= 75)
+        if (x >= 60)
         {
             direction = RIGHT;
         }
-        if (x <= 0)
+        if (x <= 10)
         {
             direction = LEFT;
         }
     }
 };
 
-class drop : public GameObject
+class drop : public GameObject,public container
 {
 //private:
 
@@ -110,14 +109,29 @@ public:
     void movement()
     {
         y++;
-        if (y > 23)
+        container*container;
+        if(x==container->x&&container->y)
         {
-        y = 0;
-        //lives = lives -1;
-        isalive = 0;
+            y=0;
+            score+=50;
+            isalive=0;
+        }
+        if (y>23)
+        {
+            lives=lives-1;
+            if(lives==0)
+            {
+                running=false;
+                gotoxy(0,6);
+                cout<<"!!!GAME OVER!!!";
+                exit(0);
+            }
+            y=0;
+            isalive=0;
+        }
+
     }
 
-}
     void draw()
     {
 
@@ -162,11 +176,14 @@ int main()
 {
 
     container *f[4];
+    //container *c=new container('X',38,23);
     drop *drops[number];
+    drop d('0',0);
+    container c('X',38,23);
+    container *co=&c;
         for (int z = 0; z < 4; z++)
         {
-        f[z]= new container('X', 38+z, 23);
-
+        f[z]= new container('X', 38, 23);
         }
         for(int y = 0; y<number; y++)
         {
@@ -175,23 +192,32 @@ int main()
 
             while (running=true)
         {
-            clrscr();
 
+            clrscr();
+          // d.checkcollison(co);
             for (int z = 0; z < number;z++)
             {
                  if (drops[z]->isalive ==0)
                  {
-                    drops[z]->x = rand() %40+20;
+                    drops[z]->x = rand() %40+20;// location of drops
                     drops[z]->isalive = 1;
+                    //d.checkcollison(co);
                   }
                  if(drops[z]->isalive !=0)
                  {
                     drops[z]->draw();
                     drops[z]->movement();
+                    //d.checkcollison(co);
                     break;
                  }
 
             }
+//            checkcollision();
+        //including here to update the score after each loop.
+        /*gotoxy(0,4);
+        cout<<"Lives left:"<<lives<<"/5";
+        gotoxy(0,5);
+        cout<<"Score:"<<score;*/
 
             for (int z = 0; z != 4; z++)
             {
