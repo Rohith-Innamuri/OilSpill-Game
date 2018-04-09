@@ -112,7 +112,14 @@ public:
     {
         dropY++;
         //container*container;
-        if(dropY==containerX||dropY==containerX+1||dropY==containerX+2||dropY==containerX+3||dropY==containerX+4)
+       /* if(dropY==containerX||dropY==containerX+1||dropY==containerX+2||dropY==containerX+3||dropY==containerX+4)
+        {
+            dropY=0;
+            score=score+50;
+            isalive=0;
+        }*/
+        //collision  between container and the drop  should  be detected  and should enter the"if" block below
+         if(dropY==containerX||dropY==containerY)
         {
             dropY=0;
             score=score+50;
@@ -215,8 +222,8 @@ int main()
                   }
                  if(drops[z]->isalive !=0)
                  {
-                    drops[z]->draw();
                     drops[z]->movement();
+                    drops[z]->draw();
                     //d.checkcollison(co);
                     break;
                  }
