@@ -131,7 +131,6 @@ public:
          //cout<<curr_conX;
        if ((dropY == containerX && dropY == containerY) || (dropX == containerX && dropX == containerY))
         {
-            //sleep(1000);
             dropY=0;
             score=score+50;
             isalive=0;
