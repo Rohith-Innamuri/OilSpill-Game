@@ -12,6 +12,7 @@ int isalive = 0;
 int score = 0;
 int lives = 5;
 int direction = 1;
+int currX;
 void gotoxy(int x, int y)
 {
     COORD coord;
@@ -80,14 +81,19 @@ public:
         switch (direction)
         {
         case RIGHT: containerX--;
+              currX=containerX;
+           // return containerX;
             break;
         case LEFT: containerX++;
+            currX=containerX;
+            //return containerX;
             break;
         }
         if (containerX >= 60)
         {
             direction = RIGHT;
         }
+
         if (containerX<= 10)
         {
             direction = LEFT;
@@ -119,8 +125,13 @@ public:
             isalive=0;
         }*/
         //collision  between container and the drop  should  be detected  and should enter the"if" block below
-         if(dropY==containerX||dropY==containerY)
+  //       int curr_conX;
+//         curr_conX=bounce();
+        // gotoxy(0,9);
+         //cout<<curr_conX;
+       if ((dropY == containerX && dropY == containerY) || (dropX == containerX && dropX == containerY))
         {
+            //sleep(1000);
             dropY=0;
             score=score+50;
             isalive=0;
@@ -240,7 +251,7 @@ int main()
             {
                 f[z]-> draw();
                 if(kbhit())f[z]->movement();
-                f[z]->bounce();
+               f[z]->bounce();
             }
 
         Sleep(100);
