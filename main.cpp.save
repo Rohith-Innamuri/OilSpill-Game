@@ -38,12 +38,16 @@ public:
         containerY = cy;
     }
     void draw()
-    {
-        for (int z = 0; z < 5; z++)
+    {           gotoxy(containerX ,containerY );
+              
+    
+        /*for (int z = 0; z < 4; z++)
         {
             gotoxy(containerX +z,containerY );
             cout<<container_symbol;
-        }
+            gotoxy(0,7);
+            cout<<"container- x =   "<< containerX<<"       container-y=   "<< containerY;
+        }*/
     }
     void movement()
     {
@@ -82,11 +86,11 @@ public:
         {
         case RIGHT: containerX--;
               currX=containerX;
-           // return containerX;
+           // return currX;
             break;
         case LEFT: containerX++;
             currX=containerX;
-            //return containerX;
+            //return currX;
             break;
         }
         if (containerX >= 60)
@@ -112,6 +116,7 @@ public:
     {
         drop_symbol = dsymbol;
         dropY = dy;
+
     }
     ~drop(){}
     void movement()
@@ -129,7 +134,22 @@ public:
 //         curr_conX=bounce();
         // gotoxy(0,9);
          //cout<<curr_conX;
-       if ((dropY == containerX && dropY == containerY) || (dropX == containerX && dropX == containerY))
+      /* if(dropY==23)
+       {
+           cout<<"container- x =   "<< containerX<<"       container-y=   "<< containerY<<endl;
+            cout<<"Drop-x =  " <<dropX<<"drop-y=   "<<dropY;
+          exit(0);
+       }*/
+
+            /*if(dropY ==23&&containerX==23)
+        {
+
+
+        }*/
+
+
+
+     if(dropY ==containerX||dropY == containerX+1||dropY == containerX+2||dropY == containerX+3||dropY == containerX+5)
         {
             dropY=0;
             score=score+50;
@@ -160,6 +180,8 @@ public:
         {
         gotoxy(dropX, dropY);
         cout << drop_symbol;
+        gotoxy(0,9);
+        cout<<"Drop-x =  " <<dropX<<"drop-y=   "<<dropY;
         gotoxy(0,1);
         cout<<"OIL SPILL GAME";
          gotoxy(0,2);
@@ -170,7 +192,8 @@ public:
         cout<<"Lives left:"<<lives<<"/5";
         gotoxy(0,5);
         cout<<"Score:"<<score;
-
+        // gotoxy(0,7);
+         //cout<<currX;
         }
     }
    /* void checkcollison(container *container)
@@ -206,7 +229,7 @@ int main()
     //drop d('0',0);
     //container c('X',38,23);
     //container *co=&c;
-        for (int z = 0; z < 4; z++)
+        for (int z = 0; z < 1; z++)
         {
         f[z]= &c;
         c.ocontainer('X', 38, 23);
@@ -250,10 +273,10 @@ int main()
             {
                 f[z]-> draw();
                 if(kbhit())f[z]->movement();
-               f[z]->bounce();
+             f[z]->bounce();
             }
 
-        Sleep(100);
+        Sleep(1000);
         }
         return 0;
 }
