@@ -112,9 +112,7 @@ public:
     {
         drop_symbol = dsymbol;
         dropY = dy;
-
     }
-    ~drop(){}
     /*This function takes care of the movement of the drop, increment  and decrement of score and lives respectively, restarting of game when it ends by player's choice*/
     void movement()
     {
@@ -171,7 +169,7 @@ public:
         cout<<"Lives left:"<<lives<<"/5";
         gotoxy(0,5);
         cout<<"Score:"<<score;
-       /* These statements are used to check the co-ordinates of drop and container (For Deveoper's use only)
+       /* //These statements are used to check the co-ordinates of drop and container (For Deveoper's use only)
        gotoxy(0,11);
        cout<<"Current containerX is "<<currX;
         gotoxy(0,12);
